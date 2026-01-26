@@ -1,6 +1,6 @@
 # Sedentary Activity Tracker
 
-A real-time sedentary behavior monitoring system that tracks physical activity using an Arduino with MPU6050 accelerometer and PIR motion sensor. The system classifies activity into three states (Active, Fidgeting, Sedentary) and alerts users after prolonged inactivity.
+A real-time sedentary behavior monitoring system that tracks physical activity using an Arduino with MPU6050 accelerometer and PIR motion sensor. This system classifies activity into three states (Active, Fidgeting, Sedentary) and alerts users after prolonged inactivity.
 
 
 
