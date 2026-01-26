@@ -505,6 +505,35 @@ function setupAuth() {
         localStorage.removeItem('token');
         window.location.href = '/login.html';
     });
+
+    // Replay button handler
+    document.getElementById('replayBtn').addEventListener('click', async function() {
+        const btn = this;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading...';
+
+        try {
+            const response = await fetch('/api/replay');
+            if (response.ok) {
+                const text = await response.text();
+                console.log('Replay started:', text);
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Started';
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-play"></i> Demo';
+                }, 3000);
+            } else {
+                throw new Error('Failed to start replay');
+            }
+        } catch (error) {
+            console.error('Replay error:', error);
+            btn.innerHTML = '<i class="fa-solid fa-exclamation-triangle"></i> Error';
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-play"></i> Demo';
+            }, 3000);
+        }
+    });
 }
 
 function init() {

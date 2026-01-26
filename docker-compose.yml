@@ -65,14 +65,5 @@ services:
       timeout: 5s
       retries: 5
 
-  replay_trigger:
-    image: curlimages/curl:latest
-    container_name: sedentary_replay_trigger
-    depends_on:
-      backend:
-        condition: service_healthy
-    command: ["curl", "-s", "http://backend:${SERVER_PORT:-8000}/api/replay"]
-    restart: "no"
-
 volumes:
   sedentary_postgres_data:

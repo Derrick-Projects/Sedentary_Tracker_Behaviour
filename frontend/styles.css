@@ -66,6 +66,30 @@ body {
     color: var(--accent-blue);
 }
 
+.replay-btn {
+    background: var(--accent-green);
+    border: 1px solid var(--accent-green);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.replay-btn:hover {
+    background: #16a34a;
+    border-color: #16a34a;
+}
+
+.replay-btn:disabled {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-secondary);
+    cursor: not-allowed;
+}
+
 .logout-btn {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
