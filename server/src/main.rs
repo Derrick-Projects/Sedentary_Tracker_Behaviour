@@ -151,7 +151,7 @@ async fn start_replay(State(state): State<AppState>) -> impl axum::response::Int
         .and_then(|s| s.parse().ok())
         .unwrap_or(50); // 50ms between readings for ~20x speed
 
-    replay::spawn_replay_task(state.tx.clone(), log_path.clone(), replay_speed);
+    replay::spawn_replay_task(state.tx.clone(), state.redis.clone(), log_path.clone(), replay_speed);
 
     format!("Replay started from: {} (speed: {}ms per reading)", log_path, replay_speed)
 }

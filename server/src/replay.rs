@@ -1,6 +1,7 @@
 use crate::models::{ProcessedState, RawReading};
 use crate::serial::alert_limit_sec;
 use chrono::{NaiveTime, Utc};
+use redis::AsyncCommands;
 use std::collections::VecDeque;
 use std::env;
 use std::fs::File;
@@ -36,13 +37,27 @@ fn classify_state(pir: i32, smoothed_acc: f32) -> String {
     }
 }
 
+fn sensor_history_limit() -> isize {
+    env::var("SENSOR_HISTORY_LIMIT")
+        .ok()
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(500)
+}
+
 pub async fn replay_log_file(
     tx: broadcast::Sender<String>,
+    redis_client: redis::Client,
     log_path: &Path,
     replay_speed_ms: u64,
 ) -> Result<usize, String> {
     let file = File::open(log_path).map_err(|e| format!("Failed to open log file: {}", e))?;
     let reader = BufReader::new(file);
+
+    // Get Redis connection for caching history
+    let mut redis_con = redis_client
+        .get_multiplexed_async_connection()
+        .await
+        .ok();
 
     let mut acc_buffer: VecDeque<f32> = VecDeque::with_capacity(SMOOTHING_WINDOW);
     let mut sedentary_timer: u64 = 0;
@@ -109,6 +124,12 @@ pub async fn replay_log_file(
 
             let json_out = serde_json::to_string(&output).unwrap();
 
+            // Cache in Redis for SSE history (like serial.rs does)
+            if let Some(ref mut con) = redis_con {
+                let _: () = con.lpush("sensor_history", &json_out).await.unwrap_or(());
+                let _: () = con.ltrim("sensor_history", 0, sensor_history_limit() - 1).await.unwrap_or(());
+            }
+
             // Broadcast to connected clients
             let _ = tx.send(json_out);
             count += 1;
@@ -126,6 +147,7 @@ pub async fn replay_log_file(
 /// Spawns a background task to replay log data
 pub fn spawn_replay_task(
     tx: broadcast::Sender<String>,
+    redis_client: redis::Client,
     log_path: String,
     replay_speed_ms: u64,
 ) {
@@ -133,7 +155,7 @@ pub fn spawn_replay_task(
         let path = Path::new(&log_path);
         println!("Starting replay from: {}", log_path);
 
-        match replay_log_file(tx, path, replay_speed_ms).await {
+        match replay_log_file(tx, redis_client, path, replay_speed_ms).await {
             Ok(count) => println!("Replay complete: {} records processed", count),
             Err(e) => eprintln!("Replay error: {}", e),
         }

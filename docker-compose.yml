@@ -48,7 +48,7 @@ services:
       - REPLAY_LOG_PATH=${REPLAY_LOG_PATH:-/app/arduino_data.log}
       - REPLAY_SPEED_MS=${REPLAY_SPEED_MS:-5}
       - DISABLE_FALLBACK=${DISABLE_FALLBACK:-true}
-      - SKIP_HISTORY=${SKIP_HISTORY:-true}
+      - SKIP_HISTORY=${SKIP_HISTORY:-false}
     volumes:
       - ${ARDUINO_LOG_FILE:-./arduino_data.log}:/app/arduino_data.log:ro
     depends_on:
