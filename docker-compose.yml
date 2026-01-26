@@ -3,9 +3,9 @@ services:
     image: postgres:15-alpine
     container_name: sedentary_db
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:-sedentary}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sedentary123}
+      POSTGRES_DB: ${POSTGRES_DB:-sedentary_tracker}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
@@ -38,12 +38,12 @@ services:
         required: false
     environment:
       - DATABASE_URL=postgres://${POSTGRES_USER:-sedentary}:${POSTGRES_PASSWORD:-sedentary123}@db:5432/${POSTGRES_DB:-sedentary_tracker}
-      - REDIS_URL=${REDIS_URL}
-      - SERIAL_PORT=${SERIAL_PORT}
-      - BAUD_RATE=${BAUD_RATE}
-      - FRONTEND_DIR=${FRONTEND_DIR}
-      - FALLBACK_TIMEOUT_SECONDS=${FALLBACK_TIMEOUT_SECONDS}
-      - JWT_SECRET=${JWT_SECRET}
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379/}
+      - SERIAL_PORT=${SERIAL_PORT:-/dev/null}
+      - BAUD_RATE=${BAUD_RATE:-115200}
+      - FRONTEND_DIR=${FRONTEND_DIR:-/app/frontend}
+      - FALLBACK_TIMEOUT_SECONDS=${FALLBACK_TIMEOUT_SECONDS:-5}
+      - JWT_SECRET=${JWT_SECRET:-dev_secret_change_in_production_abc123}
       - RUST_LOG=${RUST_LOG:-info}
       - REPLAY_LOG_PATH=${REPLAY_LOG_PATH:-/app/arduino_data.log}
       - REPLAY_SPEED_MS=${REPLAY_SPEED_MS:-5}
