@@ -1,0 +1,38 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT id, state, timer_seconds, created_at \n        FROM sedentary_log \n        ORDER BY created_at DESC \n        LIMIT 1\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "state",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 2,
+        "name": "timer_seconds",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 3,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      true,
+      true
+    ]
+  },
+  "hash": "8c660b5b8bfe9a1612bcd65c6871219c99924607cf9d26a6fdc7347a80220c16"
+}

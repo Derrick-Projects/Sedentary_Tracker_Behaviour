@@ -1,0 +1,65 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT DISTINCT ON (user_id)\n            id,\n            user_id,\n            date,\n            period_type,\n            sedentary_minutes,\n            activity_score,\n            dominant_state,\n            created_at\n        FROM activity_summary\n        WHERE period_type = $1\n        ORDER BY user_id, date DESC\n        LIMIT $2\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "user_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 3,
+        "name": "period_type",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 4,
+        "name": "sedentary_minutes",
+        "type_info": "Float4"
+      },
+      {
+        "ordinal": 5,
+        "name": "activity_score",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 6,
+        "name": "dominant_state",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 7,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "76c64121ea78efffff2a2a061c34f400a9bc184ecbec0835055b7a12c7dd4393"
+}

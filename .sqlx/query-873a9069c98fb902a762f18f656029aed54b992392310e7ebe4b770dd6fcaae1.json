@@ -1,0 +1,102 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        SELECT\n            id,\n            date,\n            period_type,\n            sedentary_minutes,\n            fidget_minutes,\n            active_minutes,\n            total_minutes,\n            sedentary_percentage,\n            active_percentage,\n            dominant_state,\n            activity_score,\n            alert_count,\n            longest_sedentary_period,\n            created_at\n        FROM activity_summary\n        WHERE user_id = $1 AND period_type = $2\n        ORDER BY date DESC\n        LIMIT $3\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "date",
+        "type_info": "Date"
+      },
+      {
+        "ordinal": 2,
+        "name": "period_type",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "sedentary_minutes",
+        "type_info": "Float4"
+      },
+      {
+        "ordinal": 4,
+        "name": "fidget_minutes",
+        "type_info": "Float4"
+      },
+      {
+        "ordinal": 5,
+        "name": "active_minutes",
+        "type_info": "Float4"
+      },
+      {
+        "ordinal": 6,
+        "name": "total_minutes",
+        "type_info": "Float4"
+      },
+      {
+        "ordinal": 7,
+        "name": "sedentary_percentage",
+        "type_info": "Float4"
+      },
+      {
+        "ordinal": 8,
+        "name": "active_percentage",
+        "type_info": "Float4"
+      },
+      {
+        "ordinal": 9,
+        "name": "dominant_state",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 10,
+        "name": "activity_score",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 11,
+        "name": "alert_count",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 12,
+        "name": "longest_sedentary_period",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 13,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "873a9069c98fb902a762f18f656029aed54b992392310e7ebe4b770dd6fcaae1"
+}

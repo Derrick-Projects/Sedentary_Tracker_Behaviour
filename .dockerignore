@@ -1,0 +1,22 @@
+# Git
+.git
+.gitignore
+
+# Cargo
+target/
+.cargo/
+
+# IDE
+.vscode/
+.idea/
+
+# Python
+ml_classification/venv/
+__pycache__/
+*.pyc
+
+# Sqlx
+# .sqlx/  # Commented out - needed for offline compile-time query verification
+
+# Environment
+.env

@@ -1,0 +1,46 @@
+{
+  "name": "Sedentary Tracker Demo",
+  "image": "mcr.microsoft.com/devcontainers/rust:1-bullseye",
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+
+  "postCreateCommand": "chmod +x .devcontainer/setup-demo.sh && .devcontainer/setup-demo.sh",
+
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "Sedentary Tracker",
+      "onAutoForward": "openBrowser",
+      "visibility": "public"
+    }
+  },
+
+  "secrets": {
+    "POSTGRES_USER": {
+      "description": "PostgreSQL username"
+    },
+    "POSTGRES_PASSWORD": {
+      "description": "PostgreSQL password"
+    },
+    "POSTGRES_DB": {
+      "description": "PostgreSQL database name"
+    },
+    "JWT_SECRET": {
+      "description": "JWT signing secret"
+    },
+    "REDIS_PORT": {
+      "description": "Redis port (default: 6379)"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rust-lang.rust-analyzer",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}

@@ -1,0 +1,78 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: sedentary_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - sedentary_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sedentary}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: sedentary_redis
+    command: redis-server --port ${REDIS_PORT:-6379}
+    ports:
+      - "${REDIS_PORT:-6379}:${REDIS_PORT:-6379}"
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -p ${REDIS_PORT:-6379} ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sedentary_backend
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER:-sedentary}:${POSTGRES_PASSWORD:-sedentary123}@db:5432/${POSTGRES_DB:-sedentary_tracker}
+      - REDIS_URL=${REDIS_URL}
+      - SERIAL_PORT=${SERIAL_PORT}
+      - BAUD_RATE=${BAUD_RATE}
+      - FRONTEND_DIR=${FRONTEND_DIR}
+      - FALLBACK_TIMEOUT_SECONDS=${FALLBACK_TIMEOUT_SECONDS}
+      - JWT_SECRET=${JWT_SECRET}
+      - RUST_LOG=${RUST_LOG:-info}
+      - REPLAY_LOG_PATH=${REPLAY_LOG_PATH:-/app/arduino_data.log}
+      - REPLAY_SPEED_MS=${REPLAY_SPEED_MS:-5}
+      - DISABLE_FALLBACK=${DISABLE_FALLBACK:-true}
+      - SKIP_HISTORY=${SKIP_HISTORY:-true}
+    volumes:
+      - ${ARDUINO_LOG_FILE:-./arduino_data.log}:/app/arduino_data.log:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "${SERVER_PORT:-8000}:8000"
+    command: ["/app/server"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  replay_trigger:
+    image: curlimages/curl:latest
+    container_name: sedentary_replay_trigger
+    depends_on:
+      backend:
+        condition: service_healthy
+    command: ["curl", "-s", "http://backend:${SERVER_PORT:-8000}/api/replay"]
+    restart: "no"
+
+volumes:
+  sedentary_postgres_data:

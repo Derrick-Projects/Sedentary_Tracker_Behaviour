@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sedentary Activity Tracker - Dashboard</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css">
+    
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <script>
+        // Auth check - redirect to login if no token
+        if (!localStorage.getItem('token')) {
+            window.location.href = '/login.html';
+        }
+    </script>
+    <div class="container">
+        
+        <header class="header">
+            <h1>Sedentary Activity Tracker</h1>
+            <div class="header-right">
+                <div class="user-info" id="userInfo">
+                    <i class="fa-solid fa-user-circle"></i>
+                    <span id="userName">User</span>
+                </div>
+                <button class="logout-btn" id="logoutBtn" title="Sign out">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-dot disconnected"></span>
+                    <span id="connectionText">Connecting...</span>
+                </div>
+            </div>
+        </header>
+
+        
+        <section class="status-section">
+            <div class="status-card main-status" id="activityStatus">
+                <div class="status-indicator inactive" id="statusIndicator">
+                    <span class="status-icon" id="statusIcon"><i class="fa-solid fa-couch"></i></span>
+                </div>
+                <div class="status-info">
+                    <h2 id="activityStateText">Loading...</h2>
+                    <div class="timer" id="inactivityTimer">
+                        <span class="timer-label" id="timerLabel">Inactive for:</span>
+                        <span class="timer-value" id="timerValue">00:00</span>
+                    </div>
+                    <div class="confidence" id="confidenceDisplay">
+                        Confidence: <span id="confidenceValue">--</span>%
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalReadings">0</div>
+                    <div class="stat-label">Total Readings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="activePercentage">0%</div>
+                    <div class="stat-label">Active Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="longestInactive">0s</div>
+                    <div class="stat-label">Longest Inactive</div>
+                </div>
+                <div class="stat-card alert-card">
+                    <div class="stat-value" id="alertCount">0</div>
+                    <div class="stat-label">Alerts Triggered</div>
+                </div>
+            </div>
+        </section>
+
+        
+        <section class="charts-section">
+            
+            <div class="chart-container">
+                <h3> Activity Timeline</h3>
+                <div class="chart-legend">
+                    <span class="legend-item"><span class="legend-color active"></span> <i class="fa-solid fa-bolt"></i> Active (Reset)</span>
+                    <span class="legend-item"><span class="legend-color transition"></span> <i class="fa-solid fa-person-running"></i> Fidget (Pause)</span>
+                    <span class="legend-item"><span class="legend-color inactive"></span> <i class="fa-solid fa-couch"></i> Sedentary (Count)</span>
+                </div>
+                <div id="timelineChart" class="chart"></div>
+            </div>
+
+            
+            <div class="chart-container">
+                <h3> Smoothed Acceleration (1s Average)</h3>
+                <div class="chart-info">
+                    <span>Fidget: <strong>&gt;0.02</strong> | Active: <strong>&gt;0.04</strong></span>
+                </div>
+                <div id="accelChart" class="chart"></div>
+            </div>
+        </section>
+
+        <!-- Bottom Section: Daily Summary & Alerts -->
+        <section class="bottom-section">
+            <!-- Daily Summary -->
+            <div class="chart-container half-width">
+                <h3> Session Summary</h3>
+                <div id="summaryChart" class="chart"></div>
+            </div>
+
+            <!-- Alert History -->
+            <div class="alert-history half-width">
+                <h3> Recent Alerts</h3>
+                <div class="alert-list" id="alertList">
+                    <p class="no-alerts">No alerts yet</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Sedentary Activity Tracker | Real-time monitoring powered by MPU6050 & PIR Sensors</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

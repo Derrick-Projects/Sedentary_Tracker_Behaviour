@@ -1,0 +1,53 @@
+# Rust build artifacts
+/target/
+
+# Serial capture tool (standalone)
+/serial_capture/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Claude Code
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Documentation (internal only)
+PROJECT_STRUCTURE.md
+
+# Data files
+*.jsonl
+sedentary_tracker_data.jsonl
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+venv/
+.venv/
+
+# Logs
+*.log
+!arduino_data.log
+
+# Credentials & secrets
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# Database
+*.db
+*.sqlite
