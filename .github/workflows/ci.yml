@@ -43,7 +43,7 @@ jobs:
         run: cargo fmt --all -- --check
 
       - name: Run Clippy
-        run: cargo clippy --all --all-targets -- -D warnings
+        run: cargo clippy --workspace --exclude db --all-targets -- -D warnings
 
   test:
     name: Unit Tests
@@ -145,6 +145,9 @@ jobs:
 
       - name: Run database migrations
         run: sqlx migrate run
+
+      - name: Run Clippy on db crate
+        run: cargo clippy -p db --all-targets -- -D warnings
 
       - name: Run database integration tests
         run: cargo test -p db
