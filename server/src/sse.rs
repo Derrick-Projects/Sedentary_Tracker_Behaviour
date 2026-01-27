@@ -12,7 +12,6 @@ use std::convert::Infallible;
 use std::time::Duration;
 
 /// Server-Sent Events handler for real-time sensor data streaming
-
 pub async fn sse_handler(State(state): State<AppState>) -> impl IntoResponse {
     let stream = create_sensor_stream(state);
 
