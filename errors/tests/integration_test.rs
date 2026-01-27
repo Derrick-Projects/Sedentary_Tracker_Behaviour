@@ -20,7 +20,7 @@ fn test_math_operations_workflow() {
 fn test_safe_division_by_user_input() {
     // Simulate handling potentially dangerous user input
     let numerator = 100u64;
-    let user_inputs = vec![0, 1, 5, 10, 0, 20];
+    let user_inputs = [0, 1, 5, 10, 0, 20];
 
     let results: Vec<Option<u64>> = user_inputs
         .iter()
@@ -52,7 +52,7 @@ fn test_overflow_protection() {
 fn test_accumulator_pattern() {
     // Simulate accumulating values
     let mut accumulator = 0u64;
-    let increments = vec![10, 20, 30, 40, 50];
+    let increments = [10, 20, 30, 40, 50];
 
     for inc in increments {
         accumulator = add(accumulator, inc);
