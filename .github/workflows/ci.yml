@@ -78,12 +78,13 @@ jobs:
         run: cargo test -p logic
 
       - name: Run unit tests (server crate)
-        run: cargo test -p server --lib
+        run: cargo test -p server
 
   test-db:
     name: Database Integration Tests
     runs-on: ubuntu-latest
     env:
+      SQLX_OFFLINE: false
       POSTGRES_USER: ${{ vars.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ vars.POSTGRES_DB }}
