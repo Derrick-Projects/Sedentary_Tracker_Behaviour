@@ -112,6 +112,8 @@ jobs:
 
       - name: Install Rust nightly
         uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: clippy
 
       - name: Install system dependencies
         run: |
