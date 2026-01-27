@@ -54,10 +54,7 @@ pub async fn replay_log_file(
     let reader = BufReader::new(file);
 
     // Get Redis connection for caching history
-    let mut redis_con = redis_client
-        .get_multiplexed_async_connection()
-        .await
-        .ok();
+    let mut redis_con = redis_client.get_multiplexed_async_connection().await.ok();
 
     let mut acc_buffer: VecDeque<f32> = VecDeque::with_capacity(SMOOTHING_WINDOW);
     let mut sedentary_timer: u64 = 0;
@@ -127,7 +124,10 @@ pub async fn replay_log_file(
             // Cache in Redis for SSE history (like serial.rs does)
             if let Some(ref mut con) = redis_con {
                 let _: () = con.lpush("sensor_history", &json_out).await.unwrap_or(());
-                let _: () = con.ltrim("sensor_history", 0, sensor_history_limit() - 1).await.unwrap_or(());
+                let _: () = con
+                    .ltrim("sensor_history", 0, sensor_history_limit() - 1)
+                    .await
+                    .unwrap_or(());
             }
 
             // Broadcast to connected clients

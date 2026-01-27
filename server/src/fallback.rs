@@ -46,7 +46,8 @@ impl FallbackState {
     }
 
     pub fn record_data_received(&self) {
-        self.last_data_time.store(current_timestamp(), Ordering::SeqCst);
+        self.last_data_time
+            .store(current_timestamp(), Ordering::SeqCst);
         if self.is_fallback_active.load(Ordering::SeqCst) {
             self.is_fallback_active.store(false, Ordering::SeqCst);
             println!("Hardware reconnected - exiting fallback mode");
@@ -169,9 +170,7 @@ async fn backfill_from_database(
         }
 
         // Convert DB row to ProcessedState
-        let timestamp: DateTime<Utc> = row
-            .created_at
-            .unwrap_or_else(Utc::now);
+        let timestamp: DateTime<Utc> = row.created_at.unwrap_or_else(Utc::now);
 
         let timer = row.timer_seconds.unwrap_or(0) as u64;
         let alert_threshold = crate::serial::alert_limit_sec();

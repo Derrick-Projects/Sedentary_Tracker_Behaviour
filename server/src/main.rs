@@ -66,8 +66,16 @@ async fn main() {
 
     // Start fallback monitor (watches for data gaps and backfills from DB)
     // Can be disabled with DISABLE_FALLBACK=true for local/replay mode
-    if env::var("DISABLE_FALLBACK").map(|v| v != "true").unwrap_or(true) {
-        fallback::spawn_fallback_monitor(pool.clone(), tx.clone(), redis_client.clone(), fallback_state);
+    if env::var("DISABLE_FALLBACK")
+        .map(|v| v != "true")
+        .unwrap_or(true)
+    {
+        fallback::spawn_fallback_monitor(
+            pool.clone(),
+            tx.clone(),
+            redis_client.clone(),
+            fallback_state,
+        );
     } else {
         println!("Fallback monitor disabled");
     }
@@ -120,10 +128,9 @@ async fn main() {
         // Frontend Hosting
         .nest_service(
             "/",
-            ServeDir::new(
-                env::var("FRONTEND_DIR")
-                    .unwrap_or_else(|_| concat!(env!("CARGO_MANIFEST_DIR"), "/../frontend").to_string())
-            ),
+            ServeDir::new(env::var("FRONTEND_DIR").unwrap_or_else(|_| {
+                concat!(env!("CARGO_MANIFEST_DIR"), "/../frontend").to_string()
+            })),
         )
         .with_state(app_state);
 
@@ -144,14 +151,21 @@ async fn get_user_stats(user: AuthUser) -> impl axum::response::IntoResponse {
 }
 
 async fn start_replay(State(state): State<AppState>) -> impl axum::response::IntoResponse {
-    let log_path = env::var("REPLAY_LOG_PATH")
-        .unwrap_or_else(|_| "arduino_data.log".to_string());
+    let log_path = env::var("REPLAY_LOG_PATH").unwrap_or_else(|_| "arduino_data.log".to_string());
     let replay_speed: u64 = env::var("REPLAY_SPEED_MS")
         .ok()
         .and_then(|s| s.parse().ok())
         .unwrap_or(50); // 50ms between readings for ~20x speed
 
-    replay::spawn_replay_task(state.tx.clone(), state.redis.clone(), log_path.clone(), replay_speed);
+    replay::spawn_replay_task(
+        state.tx.clone(),
+        state.redis.clone(),
+        log_path.clone(),
+        replay_speed,
+    );
 
-    format!("Replay started from: {} (speed: {}ms per reading)", log_path, replay_speed)
+    format!(
+        "Replay started from: {} (speed: {}ms per reading)",
+        log_path, replay_speed
+    )
 }

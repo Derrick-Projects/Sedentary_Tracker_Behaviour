@@ -14,10 +14,10 @@ pub struct RawReading {
 // Classification is also done server-side in serial.rs
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct ProcessedState {
-    pub state: String,          // "ACTIVE", "FIDGET", "SEDENTARY"
-    pub timer: u64,             // Inactive seconds
-    pub val: f32,               // Smoothed acceleration value
-    pub alert: bool,            // Trigger alert?
+    pub state: String,            // "ACTIVE", "FIDGET", "SEDENTARY"
+    pub timer: u64,               // Inactive seconds
+    pub val: f32,                 // Smoothed acceleration value
+    pub alert: bool,              // Trigger alert?
     pub timestamp: DateTime<Utc>, // Full timestamp (UTC)
 }
 

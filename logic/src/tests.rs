@@ -91,7 +91,7 @@ fn test_hjorth_constant_signal() {
     assert_eq!(features.mean, 5.0);
     assert_eq!(features.variance, 0.0);
     assert_eq!(features.hjorth_activity, 0.0);
-    
+
     assert_eq!(features.hjorth_mobility, 0.0);
     assert_eq!(features.hjorth_complexity, 0.0);
 }

@@ -16,7 +16,6 @@ async fn handle_socket(mut socket: WebSocket, state: AppState) {
     // 1. RECONNECTION BACKUP (Fetch from Redis)
     // This fills the graph immediately upon connection
     if let Ok(mut con) = state.redis.get_multiplexed_async_connection().await {
-        
         let history: Vec<String> = con.lrange("sensor_history", 0, 99).await.unwrap_or(vec![]);
 
         // Send history to frontend (reversed because lpush stores newest first)

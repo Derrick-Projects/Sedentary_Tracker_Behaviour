@@ -1,7 +1,7 @@
 // Integration tests for the logic crate
 // These test the public API as an external consumer would use it
 
-use logic::{SignalFeatures, SignalWindow, calculate_hjorth_params, check_stationarity};
+use logic::{calculate_hjorth_params, check_stationarity, SignalFeatures, SignalWindow};
 
 #[test]
 fn test_signal_processing_workflow() {

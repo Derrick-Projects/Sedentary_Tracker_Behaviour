@@ -22,7 +22,7 @@ pub async fn login_handler(State(state): State<AppState>, Form(form): Form<Login
     // Rate limiting: check failed login attempts per email
     let rate_limit_key = format!("login_attempts:{}", form.email);
     let max_attempts = 5;
-    let attempt_window = 60; 
+    let attempt_window = 60;
 
     let mut redis_conn = match state.redis.get_multiplexed_async_connection().await {
         Ok(conn) => conn,

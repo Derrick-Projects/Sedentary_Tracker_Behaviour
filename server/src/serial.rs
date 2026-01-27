@@ -147,8 +147,10 @@ pub fn spawn_serial_listener(
                                             .lpush("sensor_history", &json_out)
                                             .await
                                             .unwrap_or(());
-                                        let _: () =
-                                            con.ltrim("sensor_history", 0, sensor_history_limit() - 1).await.unwrap_or(());
+                                        let _: () = con
+                                            .ltrim("sensor_history", 0, sensor_history_limit() - 1)
+                                            .await
+                                            .unwrap_or(());
                                     }
                                     // Push to WebSocket
                                     let _ = tx.send(json_out);
