@@ -24,8 +24,8 @@ def run_analysis():
     try:
         conn = psycopg2.connect(DB_URL)
         
-        # Read raw data from the last 24 hours 
-        # We fetch the smoothed 'acceleration_val' 
+        # Read raw data in the last 24 hours 
+        # We fetch the smoothened 'acceleration_val' 
         query = """
             SELECT created_at, acceleration_val, state 
             FROM sedentary_log 
