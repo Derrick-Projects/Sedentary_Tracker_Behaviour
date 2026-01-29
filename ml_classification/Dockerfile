@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cron \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install Python packages (uses pre-built wheels)
+# Install Python dependencies (binary wheels preferred)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
