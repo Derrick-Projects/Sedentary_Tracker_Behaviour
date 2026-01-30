@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sedex Group – Task Distribution</title>
+  <style>
+    :root {
+      --border: #d0d7de;
+      --header-bg: #f6f8fa;
+      --row-alt: #fbfcfd;
+      --text: #24292f;
+      --muted: #57606a;
+      --shadow: rgba(0,0,0,0.04);
+    }
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: white;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 22px;
+      margin: 0 0 12px 0;
+      letter-spacing: 0.2px;
+    }
+    .hint {
+      margin: 0 0 18px 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .table-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px var(--shadow);
+    }
+    .table-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+    thead th {
+      position: sticky;
+      top: 0;
+      background: var(--header-bg);
+      text-align: left;
+      font-size: 13px;
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: bottom;
+    }
+    tbody td {
+      padding: 12px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    tbody tr:nth-child(even) td {
+      background: var(--row-alt);
+    }
+    td.section {
+      font-weight: 600;
+      width: 20%;
+    }
+    td.contrib {
+      width: 16%;
+      white-space: normal;
+    }
+    td.tasks {
+      width: 36%;
+    }
+    td.outputs {
+      width: 28%;
+    }
+    ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+    li {
+      margin: 0 0 6px 0;
+    }
+    .footer {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    @media (max-width: 720px) {
+      body { padding: 16px; }
+      h1 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Sedex Group – Task Distribution</h1>
+    <p class="hint">Tip: on small screens, scroll horizontally to view all columns.</p>
+
+    <div class="table-card">
+      <div class="table-scroll">
+        <table aria-label="Task distribution table">
+          <thead>
+            <tr>
+              <th scope="col">Section</th><th scope="col">Contributor(s)</th><th scope="col">Main Task</th><th scope="col">Key Outputs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="section">System Design and Concept Development</td><td class="contrib">Derrick Otieno<br><br>Mtr No: 22402632</td><td class="tasks"><ul>
+<li>Defined project scope, objectives, and target use case.</li>
+<li>Specified requirements for sensing, data, storage, and alerts.</li>
+<li>Designed system architecture integrating sensors, backend, and hardware.</li>
+<li>Selected core technologies (MPU6050, Rust, PostgreSQL, Redis, etc.).</li>
+</ul></td><td class="outputs"><ul>
+<li>System architecture blueprint.</li>
+<li>Requirements specification.</li>
+<li>Technology stack selection document.</li>
+</ul></td></tr><tr><td class="section">DevOps, Integration, and Quality Assurance</td><td class="contrib">Derrick Otieno<br><br>Mtr No: 22402632</td><td class="tasks"><ul>
+<li>Containerized full system with Docker.</li>
+<li>Worked on core Rust code and logic, error, server, test crates. Hardware implementation, JWT authentication and dependency management</li>
+<li>Configured CI/CD pipelines (GitHub Actions).</li>
+<li>Managed deployment environment, secrets, and integration testing.</li>
+<li>Set pre-commit hooks and quality checks.</li>
+</ul></td><td class="outputs"><ul>
+<li>Dockerized microservices.</li>
+<li>CI/CD pipeline.</li>
+<li>Quality checks.</li>
+<li>Deployment configuration.</li>
+<li>Parsing of raw data to rust and broadcast to multiple channels.</li>
+</ul></td></tr><tr><td class="section">Machine Learning and Analytics</td><td class="contrib">Babirye Nambuusi Emily</td><td class="tasks"><ul>
+<li>Managed and cleaned sensor datasets.</li>
+<li>Designed and trained the MLmodel for activity classification.</li>
+<li>Built ML microservice API using Flask/FastAPI.</li>
+<li>Containerized ML service with Docker; integrated system wide.</li>
+<li>Tuned models and documented pipeline.</li>
+</ul></td><td class="outputs"><ul>
+<li>ML model and API.</li>
+<li>Data cleaning scripts.</li>
+<li>Evaluation report.</li>
+<li>Containerized ML deployment.</li>
+</ul></td></tr><tr><td class="section">Backend Engineering</td><td class="contrib">Rebecca Atem Nyandeng</td><td class="tasks"><ul>
+<li>Implemented Rust backend for data ingestion and rule-based logic.</li>
+<li>Created WebSocket endpoints for real-time streaming, also caching in Redis</li>
+<li>Integrated PostgreSQL and Redis layers.</li>
+<li>Developed REST &amp; FHIR APIs.</li>
+<li>Added authentication and background jobs.</li>
+</ul></td><td class="outputs"><ul>
+<li>Rust backend service.</li>
+<li>API documentation.</li>
+<li>Secure data pipeline. FHIR-compliant data interface.</li>
+</ul></td></tr><tr><td class="section">Frontend and Visualization</td><td class="contrib">Muhammad Otah Bashi</td><td class="tasks"><ul>
+<li>Designed and built interactive dashboard in HTML, CSS, JS, D3.js.</li>
+<li>Created visualization components (status cards, charts, alert history).</li>
+<li>Integrated WebSocket client for live updates.</li>
+<li>Applied responsive design and usability standards.</li>
+</ul></td><td class="outputs"><ul>
+<li>Web dashboard.</li>
+<li>Interactive charts.</li>
+<li>Visual consistency guide.</li>
+<li>Real-time WebSocket visualization.</li>
+</ul></td></tr><tr><td class="section">Documentation, Evaluation, and Reporting</td><td class="contrib">All members</td><td class="tasks"><ul>
+<li>Authored technical documentation and group report.</li>
+<li>Produced diagrams, wireframes, and system documentation.</li>
+<li>Conducted usability and performance testing.</li>
+<li>Analyzed results and drafted conclusions &amp; reflections.</li>
+</ul></td><td class="outputs"><ul>
+<li>Final report document.</li>
+<li>Evaluation analysis.</li>
+<li>Visual design artefacts. Lessons learned section.</li>
+</ul></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer">Generated from the provided Task Distribution document.</div>
+  </div>
+</body>
+</html>
