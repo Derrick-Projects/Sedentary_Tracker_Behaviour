@@ -63,7 +63,7 @@ I was the Lead of the group for this project and did a lot of the work. I was re
 ![Figure 2: The Frontend Display](../images/image2.png)
 *Figure 2: The Frontend Display*
 
-![Figure 3: Frontend Display 2](../images/image3.pngimages)
+![Figure 3: Frontend Display 2](../images/image3.png)
 *Figure 3: Frontend Display 2*
 
 ## REFERENCES
